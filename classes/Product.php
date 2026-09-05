@@ -119,12 +119,15 @@ class Product {
     }
 
     public function getRelatedProducts($categoryId, $currentProductId, $limit = 4) {
+        $driver = $this->db->getAttribute(PDO::ATTR_DRIVER_NAME);
+        $randFunc = ($driver === 'sqlite') ? 'RANDOM()' : 'RAND()';
+
         $sql = "SELECT p.*, c.name as category_name,
                 (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
                 FROM products p
                 JOIN categories c ON p.category_id = c.id
                 WHERE p.is_active = 1 AND p.category_id = :category_id AND p.id != :current_id
-                ORDER BY RAND() LIMIT " . (int)$limit;
+                ORDER BY {$randFunc} LIMIT " . (int)$limit;
         $stmt = $this->db->prepare($sql);
         $stmt->execute([':category_id' => $categoryId, ':current_id' => $currentProductId]);
         return $stmt->fetchAll();

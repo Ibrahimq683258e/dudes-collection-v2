@@ -75,6 +75,9 @@ $adminName = $_SESSION['user_name'] ?? 'Admin';
                 <a href="banners.php" class="flex items-center px-4 py-3 rounded-xl hover:bg-emerald-900/50 hover:text-gold-400 transition-colors <?= basename($_SERVER['PHP_SELF']) === 'banners.php' ? 'bg-emerald-950 text-gold-400 font-bold border border-gold-600/30' : 'text-stone-400' ?>">
                     <i class="fa-solid fa-images text-base mr-3 w-5"></i> Hero Banners
                 </a>
+                <a href="popups.php" class="flex items-center px-4 py-3 rounded-xl hover:bg-emerald-900/50 hover:text-gold-400 transition-colors <?= basename($_SERVER['PHP_SELF']) === 'popups.php' ? 'bg-emerald-950 text-gold-400 font-bold border border-gold-600/30' : 'text-stone-400' ?>">
+                    <i class="fa-solid fa-bullhorn text-base mr-3 w-5"></i> Promo Popups
+                </a>
                 <a href="logs.php" class="flex items-center px-4 py-3 rounded-xl hover:bg-emerald-900/50 hover:text-gold-400 transition-colors <?= basename($_SERVER['PHP_SELF']) === 'logs.php' ? 'bg-emerald-950 text-gold-400 font-bold border border-gold-600/30' : 'text-stone-400' ?>">
                     <i class="fa-solid fa-shield-halved text-base mr-3 w-5"></i> Audit Logs
                 </a>

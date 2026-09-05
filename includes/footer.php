@@ -137,7 +137,7 @@
             <span class="text-[10px] font-medium mt-1">Home</span>
         </a>
         <a href="shop.php" class="flex flex-col items-center text-center text-stone-300 hover:text-gold-400 transition-colors">
-            <i class="fa-solid fa-grid-2 text-lg"></i>
+            <i class="fa-solid fa-border-all text-lg"></i>
             <span class="text-[10px] font-medium mt-1">Categories</span>
         </a>
         <a href="cart.php" class="flex flex-col items-center text-center text-stone-300 hover:text-gold-400 transition-colors relative">

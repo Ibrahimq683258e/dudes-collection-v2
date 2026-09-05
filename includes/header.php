@@ -150,6 +150,8 @@ if (isset($_SESSION['user_id'])) {
     </header>
 
     <!-- Flash Notifications Container -->
-    <div class="max-w-7xl mx-auto px-4 mt-4 w-full">
-        <?= display_flash_message() ?>
-    </div>
+    <?php if (isset($_SESSION['flash_message'])): ?>
+        <div class="max-w-7xl mx-auto px-4 mt-4 w-full">
+            <?= display_flash_message() ?>
+        </div>
+    <?php endif; ?>

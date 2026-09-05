@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (empty($message)) $errors[] = "Message cannot be empty.";
 
         if (empty($errors)) {
-            $successMessage = "Thank you for contacting Omoja Male Boutique atelier! Our tailoring representative will reach out shortly.";
+            $successMessage = "Thank you for contacting Dude's Collection atelier! Our tailoring representative will reach out shortly.";
         }
     }
 }

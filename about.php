@@ -18,7 +18,7 @@ require_once __DIR__ . '/includes/header.php';
                 Crafting Timeless African Male Luxury
             </h1>
             <p class="text-xs sm:text-sm text-stone-500 dark:text-stone-400 mt-4 leading-relaxed font-light">
-                Omoja Male Boutique was born out of a passion to redefine contemporary African male elegance. We blend traditional craftsmanship with sharp modern tailoring.
+                Dude's Collection was born out of a passion to redefine contemporary male elegance. We blend traditional craftsmanship with sharp modern tailoring.
             </p>
         </div>
 
@@ -35,7 +35,7 @@ require_once __DIR__ . '/includes/header.php';
                     In our boutique atelier, master artisans work with high-density metallic embroidery threads, polished cottons, damasks, and wool blends to craft garments fit for kings and executives.
                 </p>
                 <p class="text-xs sm:text-sm text-stone-600 dark:text-stone-300 leading-relaxed font-light">
-                    From our signature Senate Kaftans to 3-Piece Grand Agbadas, wearing Omoja is an assertion of status, heritage, and pride.
+                    From our signature Senate Kaftans to 3-Piece Grand Agbadas, wearing Dude's Collection is an assertion of status, heritage, and pride.
                 </p>
                 <div class="pt-2">
                     <a href="shop.php" class="bg-gold-500 hover:bg-gold-400 text-emerald-950 font-bold px-8 py-3.5 rounded-full shadow-lg transition-all inline-block text-xs">

@@ -59,7 +59,7 @@ require_once __DIR__ . '/includes/header.php';
         <div class="bg-white dark:bg-stone-900 rounded-3xl p-8 shadow-xl border border-stone-200 dark:border-stone-800">
 
             <div class="text-center mb-8">
-                <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400">Join Omoja Boutique</span>
+                <span class="text-xs font-bold uppercase tracking-widest text-gold-600 dark:text-gold-400">Join Dude's Collection</span>
                 <h1 class="font-serif text-3xl font-bold text-stone-900 dark:text-white mt-1">Create Account</h1>
             </div>
 

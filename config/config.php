@@ -9,9 +9,9 @@ define('UPLOADS_DIR', APP_ROOT . '/uploads');
 define('UPLOADS_URL', 'uploads/');
 
 // Site info settings
-define('SITE_NAME', "Dude's Collection");
-define('SITE_URL', 'http://localhost/omoja'); // Adjust as necessary for deployment
-define('CURRENCY_SYMBOL', 'GH¢');
+if (!defined('SITE_NAME')) define('SITE_NAME', "Dude's Collection");
+if (!defined('SITE_URL')) define('SITE_URL', 'http://localhost/omoja'); // Adjust as necessary for deployment
+if (!defined('CURRENCY_SYMBOL')) define('CURRENCY_SYMBOL', 'GH¢');
 
 // Security Configurations
 define('SESSION_LIFETIME', 1800); // 30 minutes idle timeout

@@ -4,3 +4,6 @@
 [05-Sep-2026 02:28:54 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93
 [05-Sep-2026 02:29:13 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93
 [05-Sep-2026 02:29:37 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93
+[05-Sep-2026 03:01:26 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93
+[05-Sep-2026 03:05:37 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93
+[05-Sep-2026 03:07:08 UTC] PHP Warning:  session_regenerate_id(): Session ID cannot be regenerated after headers have already been sent in /app/classes/User.php on line 93

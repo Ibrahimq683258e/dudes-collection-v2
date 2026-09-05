@@ -68,7 +68,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $settingStmt = $db->prepare("SELECT setting_value FROM settings WHERE setting_key = 'whatsapp_number' LIMIT 1");
                 $settingStmt->execute();
                 $whatsappNumber = $settingStmt->fetchColumn() ?: '233500000000';
-                $message  = "👑 *NEW ORDER - OMOJA MALE BOUTIQUE* 👑\n";
+                $message  = "👑 *NEW ORDER - DUDE'S COLLECTION* 👑\n";
                 $message .= "----------------------------------------\n";
                 $message .= "*Order Reference:* #" . $orderNumber . "\n";
                 $message .= "*Customer Name:* " . $customerName . "\n";
@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
                     <title>Redirecting to WhatsApp...</title>
                     <script src="https://cdn.tailwindcss.com"></script>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
                 </head>
                 <body class="bg-stone-950 text-white min-h-screen flex items-center justify-center p-4">
                     <div class="bg-emerald-950 border border-gold-600/40 p-8 rounded-3xl max-w-md w-full text-center shadow-2xl space-y-6">
