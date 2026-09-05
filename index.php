@@ -36,8 +36,8 @@ $newArrivals = $productModel->getNewArrivals(6);
 require_once __DIR__ . '/includes/header.php';
 ?>
 
-<!-- Hero Banner Slider -->
-<section class="relative bg-emerald-950 text-white overflow-hidden border-b border-gold-600/30">
+<!-- Hero Banner Slider (Attached directly to header without top gap) -->
+<section class="relative bg-emerald-950 text-white overflow-hidden border-b border-gold-600/30 -mt-0">
     <div class="swiper hero-swiper w-full h-[520px] md:h-[620px]">
         <div class="swiper-wrapper">
             <?php if (!empty($banners)): ?>
@@ -53,9 +53,6 @@ require_once __DIR__ . '/includes/header.php';
 
                         <!-- Content -->
                         <div class="relative z-20 max-w-7xl mx-auto px-6 sm:px-8 lg:px-12 w-full text-left" data-aos="fade-up">
-                            <span class="inline-block px-3 py-1 bg-gold-600/30 border border-gold-500/50 text-gold-400 text-xs font-semibold tracking-widest uppercase rounded-full mb-4">
-                                Premium African Tailoring
-                            </span>
                             <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl font-extrabold text-white leading-tight mb-4 max-w-2xl">
                                 <?= escape_output($banner['title']) ?>
                             </h1>
@@ -111,7 +108,7 @@ require_once __DIR__ . '/includes/header.php';
             </a>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 sm:gap-6">
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-6">
             <?php foreach ($categories as $cat): ?>
                 <a href="shop.php?category=<?= escape_output($cat['slug']) ?>" class="group block relative rounded-2xl overflow-hidden shadow-md bg-stone-900 text-white transform transition-all hover:-translate-y-1.5 hover:shadow-xl" data-aos="fade-up">
                     <div class="aspect-w-1 aspect-h-1 h-44 sm:h-52 w-full img-zoom-container relative">

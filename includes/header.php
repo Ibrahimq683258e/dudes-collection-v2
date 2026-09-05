@@ -54,7 +54,7 @@ if (isset($_SESSION['user_id'])) {
     <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Swiper JS CSS -->
@@ -80,12 +80,12 @@ if (isset($_SESSION['user_id'])) {
 
             <!-- Logo -->
             <a href="index.php" class="flex items-center space-x-3 group">
-                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-600 to-gold-400 flex items-center justify-center text-emerald-950 font-serif font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
-                    O
+                <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-gold-600 to-gold-400 flex items-center justify-center text-emerald-950 font-sans font-extrabold text-xl shadow-lg group-hover:scale-105 transition-transform">
+                    D
                 </div>
                 <div>
-                    <span class="font-serif text-2xl font-bold tracking-wider text-white block leading-none">OMOJA<span class="text-gold-400">.</span></span>
-                    <span class="text-[9px] uppercase tracking-widest text-gold-400 font-semibold">Male Boutique</span>
+                    <span class="font-sans text-xl font-black tracking-tight text-white block leading-none uppercase">DUDE'S <span class="text-gold-400">COLLECTION</span></span>
+                    <span class="text-[9px] uppercase tracking-widest text-gold-400 font-semibold">Men's Premium Store</span>
                 </div>
             </a>
 

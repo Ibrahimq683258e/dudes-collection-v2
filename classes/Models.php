@@ -69,7 +69,78 @@ class Cart {
         if (!isset($_SESSION['cart']) || !is_array($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
+
+        // If user is logged in and session cart is empty, restore cart from database
+        if (isset($_SESSION['user_id']) && empty($_SESSION['cart'])) {
+            self::loadUserCartFromDb($_SESSION['user_id']);
+        }
+
         return $_SESSION['cart'];
+    }
+
+    public static function syncUserCartToDb($userId) {
+        if (!$userId) return;
+        $db = Database::getInstance()->getConnection();
+
+        // Load existing session cart items into user_cart table
+        $cart = self::getCart();
+        $driver = $db->getAttribute(PDO::ATTR_DRIVER_NAME);
+
+        foreach ($cart as $itemKey => $item) {
+            if ($driver === 'sqlite') {
+                $check = $db->prepare("SELECT id FROM user_cart WHERE user_id = :uid AND item_key = :key");
+                $check->execute([':uid' => $userId, ':key' => $itemKey]);
+                if ($check->fetch()) {
+                    $stmt = $db->prepare("UPDATE user_cart SET quantity = :qty WHERE user_id = :uid AND item_key = :key");
+                    $stmt->execute([':qty' => $item['quantity'], ':uid' => $userId, ':key' => $itemKey]);
+                } else {
+                    $stmt = $db->prepare("INSERT INTO user_cart (user_id, item_key, product_id, quantity, size, color) VALUES (:uid, :key, :pid, :qty, :size, :color)");
+                    $stmt->execute([':uid' => $userId, ':key' => $itemKey, ':pid' => $item['product_id'], ':qty' => $item['quantity'], ':size' => $item['size'], ':color' => $item['color']]);
+                }
+            } else {
+                $stmt = $db->prepare("INSERT INTO user_cart (user_id, item_key, product_id, quantity, size, color)
+                                      VALUES (:uid, :key, :pid, :qty, :size, :color)
+                                      ON DUPLICATE KEY UPDATE quantity = :qty");
+                $stmt->execute([
+                    ':uid' => $userId,
+                    ':key' => $itemKey,
+                    ':pid' => $item['product_id'],
+                    ':qty' => $item['quantity'],
+                    ':size' => $item['size'],
+                    ':color' => $item['color']
+                ]);
+            }
+        }
+    }
+
+    public static function loadUserCartFromDb($userId) {
+        if (!$userId) return;
+        $db = Database::getInstance()->getConnection();
+
+        $stmt = $db->prepare("SELECT c.*, p.name, p.price, p.sale_price,
+                              (SELECT image_path FROM product_images WHERE product_id = p.id AND is_primary = 1 LIMIT 1) as primary_image
+                              FROM user_cart c
+                              JOIN products p ON c.product_id = p.id
+                              WHERE c.user_id = :uid");
+        $stmt->execute([':uid' => $userId]);
+        $dbCart = $stmt->fetchAll();
+
+        $cart = $_SESSION['cart'] ?? [];
+        foreach ($dbCart as $row) {
+            $itemKey = $row['item_key'];
+            if (!isset($cart[$itemKey])) {
+                $cart[$itemKey] = [
+                    'product_id' => $row['product_id'],
+                    'name' => $row['name'],
+                    'price' => $row['sale_price'] ? $row['sale_price'] : $row['price'],
+                    'quantity' => (int)$row['quantity'],
+                    'size' => $row['size'],
+                    'color' => $row['color'],
+                    'image' => !empty($row['primary_image']) ? $row['primary_image'] : 'assets/images/placeholder.jpg'
+                ];
+            }
+        }
+        $_SESSION['cart'] = $cart;
     }
 
     public static function add($productId, $quantity = 1, $size = 'M', $color = 'Default') {
@@ -95,6 +166,10 @@ class Cart {
         }
 
         $_SESSION['cart'] = $cart;
+
+        if (isset($_SESSION['user_id'])) {
+            self::syncUserCartToDb($_SESSION['user_id']);
+        }
         return true;
     }
 
@@ -103,8 +178,18 @@ class Cart {
         if (isset($cart[$itemKey])) {
             if ($quantity <= 0) {
                 unset($cart[$itemKey]);
+                if (isset($_SESSION['user_id'])) {
+                    $db = Database::getInstance()->getConnection();
+                    $stmt = $db->prepare("DELETE FROM user_cart WHERE user_id = :uid AND item_key = :key");
+                    $stmt->execute([':uid' => $_SESSION['user_id'], ':key' => $itemKey]);
+                }
             } else {
                 $cart[$itemKey]['quantity'] = (int)$quantity;
+                if (isset($_SESSION['user_id'])) {
+                    $db = Database::getInstance()->getConnection();
+                    $stmt = $db->prepare("UPDATE user_cart SET quantity = :qty WHERE user_id = :uid AND item_key = :key");
+                    $stmt->execute([':qty' => (int)$quantity, ':uid' => $_SESSION['user_id'], ':key' => $itemKey]);
+                }
             }
             $_SESSION['cart'] = $cart;
             return true;
@@ -116,6 +201,11 @@ class Cart {
         $cart = self::getCart();
         if (isset($cart[$itemKey])) {
             unset($cart[$itemKey]);
+            if (isset($_SESSION['user_id'])) {
+                $db = Database::getInstance()->getConnection();
+                $stmt = $db->prepare("DELETE FROM user_cart WHERE user_id = :uid AND item_key = :key");
+                $stmt->execute([':uid' => $_SESSION['user_id'], ':key' => $itemKey]);
+            }
             $_SESSION['cart'] = $cart;
             return true;
         }
@@ -124,6 +214,11 @@ class Cart {
 
     public static function clear() {
         $_SESSION['cart'] = [];
+        if (isset($_SESSION['user_id'])) {
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->prepare("DELETE FROM user_cart WHERE user_id = :uid");
+            $stmt->execute([':uid' => $_SESSION['user_id']]);
+        }
     }
 
     public static function getTotal() {

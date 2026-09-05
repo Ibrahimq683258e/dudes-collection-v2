@@ -1,12 +1,8 @@
 /* Custom Styles for Omoja Male Boutique */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
-
-h1, h2, h3, h4, .font-serif {
-    font-family: 'Playfair Display', serif;
+body, h1, h2, h3, h4, .font-serif {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 .gold-gradient-text {

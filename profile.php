@@ -32,6 +32,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['update_profile'])) {
         if (!empty($name)) {
             $userModel->updateProfile($_SESSION['user_id'], $name, $phone, $address, $city);
             $_SESSION['user_name'] = $name;
+
+            // Handle Avatar File Upload
+            if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
+                $upload = FileUploader::uploadImage('avatar', 'uploads/avatars/');
+                if ($upload['status']) {
+                    $userModel->updateAvatar($_SESSION['user_id'], $upload['file_path']);
+                } else {
+                    set_flash_message('warning', 'Profile updated, but avatar upload failed: ' . $upload['message']);
+                }
+            }
+
             set_flash_message('success', 'Profile information updated successfully.');
             header("Location: profile.php");
             exit();
@@ -109,13 +120,28 @@ require_once __DIR__ . '/includes/header.php';
 
             <!-- Profile Settings Panel -->
             <div class="bg-white dark:bg-stone-900 rounded-2xl p-6 border border-stone-200 dark:border-stone-800 shadow-sm h-fit space-y-4">
-                <h2 class="font-serif text-xl font-bold text-stone-900 dark:text-white pb-3 border-b border-stone-100 dark:border-stone-800">
-                    Profile Information
-                </h2>
+                <div class="flex items-center space-x-4 pb-4 border-b border-stone-100 dark:border-stone-800">
+                    <div class="w-16 h-16 rounded-full overflow-hidden bg-emerald-950 border-2 border-gold-500 flex-shrink-0 flex items-center justify-center">
+                        <?php if (!empty($user['avatar'])): ?>
+                            <img src="<?= escape_output($user['avatar']) ?>" class="w-full h-full object-cover">
+                        <?php else: ?>
+                            <i class="fa-solid fa-user text-2xl text-gold-400"></i>
+                        <?php endif; ?>
+                    </div>
+                    <div>
+                        <h2 class="font-serif text-lg font-bold text-stone-900 dark:text-white"><?= escape_output($user['name']) ?></h2>
+                        <span class="text-xs text-stone-400"><?= escape_output($user['email']) ?></span>
+                    </div>
+                </div>
 
-                <form action="profile.php" method="POST" class="space-y-4">
+                <form action="profile.php" method="POST" enctype="multipart/form-data" class="space-y-4">
                     <?= csrf_field() ?>
                     <input type="hidden" name="update_profile" value="1">
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1">Profile Avatar Picture</label>
+                        <input type="file" name="avatar" accept="image/*" class="w-full bg-stone-50 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-xl px-3 py-1.5 text-xs text-stone-900 dark:text-white focus:outline-none focus:border-gold-500">
+                    </div>
 
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-1">Full Name</label>

@@ -6,6 +6,8 @@ USE `boutique_db`;
 
 -- Drop existing tables if re-importing
 SET FOREIGN_KEY_CHECKS = 0;
+DROP TABLE IF EXISTS `popups`;
+DROP TABLE IF EXISTS `user_cart`;
 DROP TABLE IF EXISTS `audit_logs`;
 DROP TABLE IF EXISTS `login_attempts`;
 DROP TABLE IF EXISTS `password_resets`;
@@ -33,6 +35,7 @@ CREATE TABLE `users` (
   `lockout_time` DATETIME DEFAULT NULL,
   `address` TEXT DEFAULT NULL,
   `city` VARCHAR(100) DEFAULT NULL,
+  `avatar` VARCHAR(255) DEFAULT NULL,
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -180,6 +183,34 @@ CREATE TABLE `settings` (
   `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- Persistent User Cart Table
+CREATE TABLE `user_cart` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `user_id` INT UNSIGNED NOT NULL,
+  `item_key` VARCHAR(100) NOT NULL,
+  `product_id` INT UNSIGNED NOT NULL,
+  `quantity` INT UNSIGNED NOT NULL DEFAULT 1,
+  `size` VARCHAR(20) DEFAULT 'M',
+  `color` VARCHAR(50) DEFAULT 'Default',
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  UNIQUE KEY `user_item` (`user_id`, `item_key`),
+  FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`product_id`) REFERENCES `products`(`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Promotional Popups Table
+CREATE TABLE `popups` (
+  `id` INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  `title` VARCHAR(150) NOT NULL,
+  `subtitle` VARCHAR(255) DEFAULT NULL,
+  `image_path` VARCHAR(255) DEFAULT NULL,
+  `button_text` VARCHAR(50) DEFAULT 'Shop Collection',
+  `button_link` VARCHAR(255) DEFAULT 'shop.php',
+  `is_active` TINYINT(1) DEFAULT 1,
+  `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 
 -- =======================================================
 -- SAMPLE DATA INSERTION
@@ -230,8 +261,8 @@ INSERT INTO `order_items` (`id`, `order_id`, `product_id`, `product_name`, `pric
 (2, 2, 3, 'Sovereign Grand Agbada 3-Piece', 850.00, 1, 'XXL', 'Burgundy', 850.00);
 
 INSERT INTO `settings` (`setting_key`, `setting_value`) VALUES
-('store_name', 'Omoja Male Boutique'),
-('store_tagline', 'Authentic African Male Style & Bespoke Apparel'),
+('store_name', 'Dude\'s Collection'),
+('store_tagline', 'Modern & Clean Executive Male Apparel'),
 ('whatsapp_number', '233500000000'),
 ('contact_email', 'sales@omoja.shop'),
 ('contact_phone', '+233 50 000 0000'),

@@ -51,9 +51,14 @@ class User {
     }
 
     public function findById($id) {
-        $stmt = $this->db->prepare("SELECT id, name, email, phone, role, status, address, city, created_at FROM users WHERE id = :id LIMIT 1");
+        $stmt = $this->db->prepare("SELECT id, name, email, phone, role, status, address, city, avatar, created_at FROM users WHERE id = :id LIMIT 1");
         $stmt->execute([':id' => $id]);
         return $stmt->fetch();
+    }
+
+    public function updateAvatar($userId, $avatarPath) {
+        $stmt = $this->db->prepare("UPDATE users SET avatar = :avatar WHERE id = :id");
+        return $stmt->execute([':avatar' => $avatarPath, ':id' => $userId]);
     }
 
     public function login($email, $password) {
@@ -90,6 +95,12 @@ class User {
             $_SESSION['user_name'] = $user['name'];
             $_SESSION['user_email'] = $user['email'];
             $_SESSION['user_role'] = $user['role'];
+
+            // Sync/load persistent cart for logged-in user
+            if (class_exists('Cart')) {
+                Cart::loadUserCartFromDb($user['id']);
+                Cart::syncUserCartToDb($user['id']);
+            }
 
             return ['status' => true, 'user' => $user];
         } else {

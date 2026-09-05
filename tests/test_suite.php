@@ -49,6 +49,12 @@ try {
         CREATE TABLE IF NOT EXISTS settings (
             id INTEGER PRIMARY KEY AUTOINCREMENT, setting_key TEXT UNIQUE, setting_value TEXT
         );
+        CREATE TABLE IF NOT EXISTS user_cart (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, user_id INTEGER, item_key TEXT, product_id INTEGER, quantity INTEGER, size TEXT, color TEXT, created_at DATETIME DEFAULT CURRENT_TIMESTAMP, updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
+        CREATE TABLE IF NOT EXISTS popups (
+            id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, subtitle TEXT, image_path TEXT, button_text TEXT, button_link TEXT, is_active INTEGER DEFAULT 1, created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+        );
     ");
 
     // 1. Test User Registration & Login

@@ -90,16 +90,12 @@ require_once __DIR__ . '/includes/header.php';
                     <!-- Category Filter -->
                     <div>
                         <label class="block text-xs font-bold uppercase tracking-wider text-stone-700 dark:text-stone-300 mb-2">Categories</label>
-                        <div class="space-y-1.5 text-xs">
-                            <a href="shop.php<?= $searchQuery ? '?search='.urlencode($searchQuery) : '' ?>" class="block py-1 px-2.5 rounded-lg font-medium transition-colors <?= empty($categorySlug) ? 'bg-emerald-950 text-gold-400 font-bold' : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800' ?>">
-                                All Categories
-                            </a>
+                        <select name="category" onchange="this.form.submit()" class="w-full bg-stone-50 dark:bg-stone-800 border border-stone-300 dark:border-stone-700 rounded-lg p-2 text-xs text-stone-900 dark:text-white">
+                            <option value="">All Categories</option>
                             <?php foreach ($categories as $cat): ?>
-                                <a href="shop.php?category=<?= escape_output($cat['slug']) ?>" class="block py-1 px-2.5 rounded-lg font-medium transition-colors <?= $categorySlug === $cat['slug'] ? 'bg-emerald-950 text-gold-400 font-bold' : 'text-stone-600 dark:text-stone-400 hover:bg-stone-100 dark:hover:bg-stone-800' ?>">
-                                    <?= escape_output($cat['name']) ?>
-                                </a>
+                                <option value="<?= escape_output($cat['slug']) ?>" <?= $categorySlug === $cat['slug'] ? 'selected' : '' ?>><?= escape_output($cat['name']) ?></option>
                             <?php endforeach; ?>
-                        </div>
+                        </select>
                     </div>
 
                     <!-- Size Filter -->

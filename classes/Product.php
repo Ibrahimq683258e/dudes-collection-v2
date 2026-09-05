@@ -21,13 +21,13 @@ class Product {
 
         $params = [];
 
-        if ($categoryId) {
+        if (!empty($categoryId)) {
             $sql .= " AND p.category_id = :category_id";
             $params[':category_id'] = $categoryId;
         }
 
-        if ($search) {
-            $sql .= " AND (p.name LIKE :search OR p.description LIKE :search OR p.sku LIKE :search)";
+        if (!empty($search)) {
+            $sql .= " AND (p.name LIKE :search OR p.description LIKE :search OR p.short_description LIKE :search OR p.sku LIKE :search OR c.name LIKE :search)";
             $params[':search'] = "%{$search}%";
         }
 
